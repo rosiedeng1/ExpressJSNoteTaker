@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const fs = require("fs")
+const { readFromFile, readAndAppend } = require('../helper/fsUtils');
 
 const PORT = process.env.port || 3006;
 const app = express();
@@ -17,10 +17,11 @@ app.get('/', (req, res) =>
   res.sendFile(path.join(__dirname, '/public/index.html'))
 );
 
-// GET Route for notes
+// GET Route for note taker page 
 app.get('/notes', (req, res) =>
   res.sendFile(path.join(__dirname, '/public/notes.html'))
 );
+
 
 // GET Route for notes
 app.get('/api/notes', (req, res) => {
@@ -32,42 +33,36 @@ app.get('/api/notes', (req, res) => {
   ]
   // TODO: myNotes should be read from db.json
 
-  res.json(myNotes)
+  readFromFile('./db/db.json').then((myNotes) => res.json(JSON.parse(myNotes)));
 });
 
 // POST Route for notes
 app.post('/api/notes', (req, res) => {
-  let title = req.body.title
-  let text = req.body.text
-  let newNote = {
-    "title": title,
-    "text": text
-  }
-  
-  // TODO: Append {...} to db/db.json
+  console.log(req.body);
 
+  // let title = req.body.title
+  // let text = req.body.text
+  // let newNote = {
+  //   "title": title,
+  //   "text": text
+  // }
+
+  const { title, text } = req.body;
+
+  if (req.body) {
+    const newNote = {
+      title,
+      text,
+    };
+
+  readAndAppend(newNote, './db/db.json');
   res.json(myNotes)
+} else {
+  res.error('Error in adding notes');
+}
+  
 });
 
-app.get('/notes', (req, res) =>
-  res.sendFile(path.join(__dirname, '/public/notes.html'))
-);
-
-// // GET Route for feedback page
-// app.get('/feedback', (req, res) =>
-//   res.sendFile(path.join(__dirname, '/public/pages/feedback.html'))
-// );
-
-// app.post('/api/diagnostics', (req, res) => {
-//   // Log that a POST request was received
-//   console.info(`${req.method} request received to submit feedback`);
-// });
-
-// app.get('/api/diagnostics', (req, res) => {
-//   console.info(`${req.method} request received for feedback`);
-
-//   readFromFile('./db/diagnostics/json').then((data) => res.json(JSON.parse(data)));
-// });
 
 app.listen(PORT, () =>
   console.log(`App listening at http://localhost:${PORT}`)
