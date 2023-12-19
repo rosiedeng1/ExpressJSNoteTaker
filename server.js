@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const { readFromFile, readAndAppend } = require('./helper/fsUtils');
+const { v4: uuidv4 } = require('uuid');
 
 const PORT = process.env.port || 3006;
 const app = express();
@@ -40,12 +41,15 @@ app.post('/api/notes', (req, res) => {
   //   "text": text
   // }
 
-  const { title, text } = req.body;
+  // Destructured title, and text, added newNote, which can be read in the dbjson file
+  // Added notes_id to display the saved notes
+  const { title, text, notes_id } = req.body;
 
   if (req.body) {
     const newNote = {
       title,
       text,
+      notes_id: uuidv4(),
     };
 
   readAndAppend(newNote, './db/db.json');
