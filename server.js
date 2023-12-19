@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const { readFromFile, readAndAppend } = require('../helper/fsUtils');
+const { readFromFile, readAndAppend } = require('./helper/fsUtils');
 
 const PORT = process.env.port || 3006;
 const app = express();
@@ -25,13 +25,6 @@ app.get('/notes', (req, res) =>
 
 // GET Route for notes
 app.get('/api/notes', (req, res) => {
-  let myNotes = [
-    {
-        "title":"Test Title",
-        "text":"Test text"
-    }
-  ]
-  // TODO: myNotes should be read from db.json
 
   readFromFile('./db/db.json').then((myNotes) => res.json(JSON.parse(myNotes)));
 });
@@ -56,9 +49,9 @@ app.post('/api/notes', (req, res) => {
     };
 
   readAndAppend(newNote, './db/db.json');
-  res.json(myNotes)
+  readFromFile('./db/db.json').then((myNotes) => res.json(JSON.parse(myNotes)));
 } else {
-  res.error('Error in adding notes');
+  res.err('Error in adding notes');
 }
   
 });
