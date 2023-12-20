@@ -1,3 +1,4 @@
+// Imports all the necessary modules and libraries
 const express = require('express');
 const path = require('path');
 const { readFromFile, readAndAppend } = require('./helper/fsUtils');
@@ -24,7 +25,7 @@ app.get('/notes', (req, res) =>
 );
 
 
-// GET Route for notes
+// GET Route for notes, made promsie to read the fs file (retrieves the notes) which can be seen in db.json file
 app.get('/api/notes', (req, res) => {
 
   readFromFile('./db/db.json').then((myNotes) => res.json(JSON.parse(myNotes)));
@@ -34,24 +35,18 @@ app.get('/api/notes', (req, res) => {
 app.post('/api/notes', (req, res) => {
   console.log(req.body);
 
-  // let title = req.body.title
-  // let text = req.body.text
-  // let newNote = {
-  //   "title": title,
-  //   "text": text
-  // }
-
   // Destructured title, and text, added newNote, which can be read in the dbjson file
-  // Added notes_id to display the saved notes
-  const { title, text, notes_id } = req.body;
+  // Added id to display the saved notes
+  const { title, text, id } = req.body;
 
   if (req.body) {
     const newNote = {
       title,
       text,
-      notes_id: uuidv4(),
+      id: uuidv4(),
     };
 
+  // Appended the new note to db.json file, which was written in correspondence with fsUtils.js file
   readAndAppend(newNote, './db/db.json');
   readFromFile('./db/db.json').then((myNotes) => res.json(JSON.parse(myNotes)));
 } else {
@@ -60,7 +55,15 @@ app.post('/api/notes', (req, res) => {
   
 });
 
+// DELETE /api/notes/:id should receive a query parameter that contains the id of a note to delete. To delete a note, you'll need to read all notes from the db.json file, remove the note with the given id property, and then rewrite the notes to the db.json file
 
+// DELETE Route for notes 
+app.delete('api/notes/:id', (req,res) => {
+  readFromFile('./db/db.json').then((myNotes) => res.json(JSON.parse(myNotes)));
+  let 
+})
+
+// Executes the instance by listening for incoming connections 
 app.listen(PORT, () =>
   console.log(`App listening at http://localhost:${PORT}`)
 );
