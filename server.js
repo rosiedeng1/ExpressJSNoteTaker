@@ -4,7 +4,7 @@ const path = require('path');
 const { readFromFile, readAndAppend, deleteFile } = require('./helper/fsUtils');
 const { v4: uuidv4 } = require('uuid');
 
-const PORT = process.env.port || 3006;
+const PORT = process.env.port || 80;
 const app = express();
 
 // Middleware for parsing JSON and urlencoded form data
@@ -60,7 +60,7 @@ app.post('/api/notes', (req, res) => {
 // DELETE Route for notes (using fsUtils.js)
 app.delete('api/notes/:id', (req,res) => {
   readFromFile('./db/db.json').then((myNotes) => res.json(JSON.parse(myNotes)));
-  deleteFile(id);
+  deleteFile('./db/db.json/:id');
   readAndAppend(newNote, './db/db.json');
   readFromFile('./db/db.json').then((myNotes) => res.json(JSON.parse(myNotes)));
 })
