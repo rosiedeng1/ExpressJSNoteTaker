@@ -5,7 +5,7 @@ const { readFromFile, readAndAppend } = require('./helper/fsUtils');
 const { v4: uuidv4 } = require('uuid');
 const fs = require('fs');
 
-const PORT = process.env.port || 3002;
+const PORT = process.env.PORT || 3000;
 const app = express();
 
 // Middleware for parsing JSON and urlencoded form data
