@@ -3,8 +3,9 @@ const express = require('express');
 const path = require('path');
 const { readFromFile, readAndAppend } = require('./helper/fsUtils');
 const { v4: uuidv4 } = require('uuid');
+const fs = require('fs');
 
-const PORT = process.env.port || 80;
+const PORT = process.env.port || 3002;
 const app = express();
 
 // Middleware for parsing JSON and urlencoded form data
@@ -60,9 +61,14 @@ app.delete('/api/notes/:id', (req, res) => {
   const id = req.params.id; // Get the ID from the request parameters
 
   // Reads all the notes from db.json file and then parses the JSON data
-  readFromFile('./db/db.json').then((myNotes) => res.json(JSON.parse(myNotes)));
+  fs.readFile('./db/db.json', 'utf8', (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send('An error occurred while reading the file.');
+    }
 
-  let notes = JSON.parse(myNotes);
+    // Parse the JSON
+    let notes = JSON.parse(data);
 
     // Find the index of the note with the given ID
     const index = notes.findIndex(note => note.id === id);
@@ -84,7 +90,9 @@ app.delete('/api/notes/:id', (req, res) => {
       // If the note wasn't found, send a 404 status
       res.status(404).send(`Note with id ${id} not found.`);
     }
-  });
+  })
+  
+});
 
 // Executes the instance by listening for incoming connections 
 app.listen(PORT, () =>
