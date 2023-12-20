@@ -15,7 +15,7 @@ Type in "npm run start" to run the application and access the webpage
 ![SavedNoteAppears](images/NewNoteAppears.png)
 ![SavedNoteOnRight](images/SavedNoteonRight.png)
 
-Instructions for ![Homepage(Index.html)]: When you type in http://localhost:3006, this will take you to the home page where you can click get started to take you to the notes page 
+Instructions for ![Homepage(Index.html)]: When you type in http://localhost:80, this will take you to the home page where you can click get started to take you to the notes page 
 Instructions for ![TypeinNote]: Under Note Title and Note Text, type in your desired notes and click on the "Save Note" button to save the note  
 Instructions for ![SavedNoteAppears]: Your saved note will then appear on the left hand column with all your previously saved notes 
 Instructions for ![SavedNoteOnRight]: When you click on your saved note on the left hand side, it will appear in the right column with an option to create a new note if you click on the button 

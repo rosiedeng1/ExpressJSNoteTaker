@@ -31,15 +31,4 @@ const readAndAppend = (content, file) => {
   });
 };
 
-
-const deleteFile = (filePath) => {
-  fs.unlink(filePath, (err) => {
-    if (err) {
-        console.error(`Error deleting file: ${err.message}`);
-    } else {
-        console.log(`File deleted successfully`);
-    }
-});
-}
-
-module.exports = { readFromFile, writeToFile, readAndAppend, deleteFile };
+module.exports = { readFromFile, writeToFile, readAndAppend };
