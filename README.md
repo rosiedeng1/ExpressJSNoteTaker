@@ -12,8 +12,8 @@ Type in "npm run start" to run the application and access the webpage
 ## Usage
 ![Homepage(Index.html)](images/Index.html.png)
 ![TypeinNote](images/NewNote.png)
-![SavedNoteAppears](images/NewNoteAppears.png)
-![SavedNoteOnRight](images/SavedNoteonRight.png)
+![SavedNoteAppears](images/SavedNoteAppears.png)
+![SavedNoteOnRight](images/SavedNoteOnRight.png)
 
 Instructions for ![Homepage(Index.html)]: When you type in http://localhost:80, this will take you to the home page where you can click get started to take you to the notes page 
 Instructions for ![TypeinNote]: Under Note Title and Note Text, type in your desired notes and click on the "Save Note" button to save the note  
